@@ -12,6 +12,14 @@ class Contacts {
     return users;
   }
 
+  public static async getContactById(contactId: number) {
+    const user = await db(Contacts.table)
+      .where({ id: contactId })
+      .select()
+      .first();
+    return user;
+  }
+
   public static async createContact(contact: any) {
     try {
       logger.info(`Inserting contact ${contact.name} into database`);
@@ -31,6 +39,21 @@ class Contacts {
         StatusCodes.INTERNAL_SERVER_ERROR
       );
     }
+  }
+
+  public static async updateContact(user: any): Promise<any> {
+    logger.info("Updating in table");
+    const [updatedUser] = await db(Contacts.table)
+      .where({ id: user.id })
+      .update({
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        photograph: user.photograph,
+      })
+      .returning("*");
+
+    return updatedUser;
   }
 
   public static async deleteContact(contactId: number): Promise<void> {
