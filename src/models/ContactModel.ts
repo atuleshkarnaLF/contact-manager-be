@@ -43,17 +43,21 @@ class Contacts {
 
   public static async updateContact(user: any): Promise<any> {
     logger.info("Updating in table");
-    const [updatedUser] = await db(Contacts.table)
-      .where({ id: user.id })
-      .update({
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        photograph: user.photograph,
-      })
-      .returning("*");
+    try {
+      const [updatedUser] = await db(Contacts.table)
+        .where({ id: user.id })
+        .update({
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          photograph: user.photograph,
+        })
+        .returning("*");
 
-    return updatedUser;
+      return updatedUser;
+    } catch (error) {
+      logger.info(error);
+    }
   }
 
   public static async deleteContact(contactId: number): Promise<void> {
