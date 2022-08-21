@@ -42,3 +42,11 @@ export const createContact = async (
     );
   }
 };
+
+export const deleteContact = async (id: number): Promise<Success<Contact>> => {
+  logger.info("Deleting user");
+  await ContactModel.deleteContact(id);
+  return {
+    message: "Users deleted successfully",
+  };
+};

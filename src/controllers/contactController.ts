@@ -30,3 +30,16 @@ export const createContact = (
     .then((data) => res.json(data))
     .catch((err) => next(err));
 };
+
+export const deleteContact = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { contactId } = req.params;
+
+  contactService
+    .deleteContact(+contactId)
+    .then((data) => res.json(data))
+    .catch((err) => next(err));
+};
