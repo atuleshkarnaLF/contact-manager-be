@@ -1,3 +1,5 @@
+import { Request } from "express";
+
 export interface Contact {
   id: number;
   name: string;
@@ -14,3 +16,11 @@ export interface User {
   password: string;
 }
 export type UserToInsert = Omit<User, "id">;
+
+export interface TokenPayload {
+  userId: number;
+}
+
+export interface AuthorizedRequest extends Request {
+  authUser?: number;
+}
